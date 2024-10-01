@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWC Console", "EWC Console\EWC Console.csproj", "{66B50AB7-4245-49FB-9E99-A902F96524A9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66B50AB7-4245-49FB-9E99-A902F96524A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B50AB7-4245-49FB-9E99-A902F96524A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B50AB7-4245-49FB-9E99-A902F96524A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B50AB7-4245-49FB-9E99-A902F96524A9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACF85289-45D5-4954-9C08-8143E80034FF}
+	EndGlobalSection
+EndGlobal
