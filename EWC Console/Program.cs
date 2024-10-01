@@ -2,23 +2,26 @@
 using System;
 using System.Linq;
 
-namespace FirstApp
+namespace EWC_Console
 {
     class Program
     {
         static void Main(string[] args)
         {
-            using (var db = new MedicinalProductsContext())
-            {
-                // получаем объекты из бд и выводим на консоль
-                var medicines = db.Medicines.ToList();
-                Console.WriteLine("Список объектов:");
-                foreach (var m in medicines)
-                {
-                    Console.WriteLine($"{m.Id}.{m.Name} - {m.Manufacturer}, {m.Indications}, {m.Contraindications}");
-                }
-            }
+            using MedicinalProductsContext db = new();
+            DbInitializer.Initialize(db);
+            Console.WriteLine("Press any key...");
             Console.ReadKey();
+            //Tasks.Task_1(db, 5);
+            //Tasks.Task_2(db, 5);
+            //Tasks.Task_3(db);
+            //Tasks.Task_4(db, 5);
+            //Tasks.Task_5(db, 5);
+            //Tasks.Task_6(db);
+            //Tasks.Task_7(db);
+            //Tasks.Task_8(db);
+            Tasks.Task_9(db);
+            //Tasks.Task_10(db);
         }
     }
 }
