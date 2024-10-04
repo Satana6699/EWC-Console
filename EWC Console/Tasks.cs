@@ -25,9 +25,9 @@ namespace EWC_Console
         public static void Task_2(MedicinalProductsContext db, int take = 0)
         {
             StartTask(2);
-            var ageLimit = 30;
-            var familyMembers = (take > 0) ? db.FamilyMembers.Where(m => m.Age == ageLimit).Take(take).ToList() :
-                db.FamilyMembers.Where(m => m.Age > ageLimit).ToList();
+            var ageLimit = 80;
+            var familyMembers = (take > 0) ? db.FamilyMembers.Where(m => m.Age >= ageLimit).Take(take).ToList() :
+                db.FamilyMembers.Where(m => m.Age >= ageLimit).ToList();
             Console.WriteLine("Table FamilyMembers (older than 30):");
             foreach (var m in familyMembers)
             {

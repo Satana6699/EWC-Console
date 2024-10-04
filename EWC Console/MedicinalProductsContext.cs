@@ -1,8 +1,13 @@
-﻿using System;
+﻿#define serverhost
+//#define localhost
+//#define sqllite
+using System;
 using System.Collections.Generic;
 using EWC_Console.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Configuration;
+using Microsoft.Data.SqlClient;
+using System.IO;
 namespace EWC_Console;
 
 public partial class MedicinalProductsContext : DbContext
@@ -29,7 +34,54 @@ public partial class MedicinalProductsContext : DbContext
     public virtual DbSet<Prescription> Prescriptions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=MedicinalProducts;Trusted_Connection=True;");
+    {
+        ConfigurationBuilder builder = new();
+
+        ///Установка пути к текущему каталогу
+        builder.SetBasePath(Directory.GetCurrentDirectory());
+        // получаем конфигурацию из файла appsettings.json
+        builder.AddJsonFile("appsettings.json");
+        // создаем конфигурацию
+        IConfigurationRoot configuration = builder.AddUserSecrets<Program>().Build();
+
+        /// Получаем строку подключения
+        string connectionString = "";
+
+        //Вариант для Sqlite
+#if sqllite
+        connectionString = configuration.GetConnectionString("SqliteConnection");
+#endif
+
+        //Вариант для локального SQL Server
+#if localhost
+        connectionString = configuration.GetConnectionString("SQLConnection");
+#endif
+
+        //Вариант для удаленного SQL Server
+#if serverhost
+        //Считываем пароль и имя пользователя из secrets.json
+        string secretUser = configuration["Database:login"];
+        string secretPass = configuration["Database:password"];
+        SqlConnectionStringBuilder sqlConnectionStringBuilder = new(configuration.GetConnectionString("RemoteSQLConnection"))
+        {
+            Password = secretPass,
+            UserID = secretUser
+        };
+        connectionString = sqlConnectionStringBuilder.ConnectionString;
+#endif
+
+
+        _ = optionsBuilder
+#if serverhost || localhost
+            .UseSqlServer(connectionString)
+#elif sqllite
+            .UseSqlite(connectionString)
+#endif
+            .Options;
+        optionsBuilder.LogTo(message => System.Diagnostics.Debug.WriteLine(message));
+
+
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
